@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPLAD Sentinel</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            color: #172554;
+        }
+
+        header {
+            background: #12336b;
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        main {
+            padding: 25px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #00000010;
+        }
+
+        .number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1763aa;
+        }
+
+        button {
+            background: #1763aa;
+            color: white;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #12336b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 15px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .risk {
+            color: #b91c1c;
+            font-weight: bold;
+        }
+
+        .safe {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        #alerts {
+            background: white;
+            padding: 18px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .note {
+            color: #64748b;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <h1>MPLAD Sentinel</h1>
+    <p>AI-Powered Monitoring and Risk Detection System</p>
+</header>
+
+<main>
+    <h2>Project Dashboard</h2>
+    <p>Monitor development projects, fund usage and potential risks.</p>
+
+    <div class="cards">
+        <div class="card">
+            <p>Total Projects</p>
+            <div class="number" id="total">4</div>
+        </div>
+
+        <div class="card">
+            <p>Projects at Risk</p>
+            <div class="number" id="riskCount">2</div>
+        </div>
+
+        <div class="card">
+            <p>Completed Projects</p>
+            <div class="number" id="completed">1</div>
+        </div>
+    </div>
+
+    <h2>Sample Project Register</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Progress</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="projectTable"></tbody>
+    </table>
+
+    <section id="alerts">
+        <h2>Risk Alerts</h2>
+        <p id="alertMessage">Click below to check sample project risks.</p>
+        <button onclick="checkRisks()">Check Project Risks</button>
+    </section>
+
+    <p class="note">
+        Prototype demonstration only. All project information is fictional
+        sample data and is not connected to government systems.
+    </p>
+</main>
+
+<script>
+    const projects = [
+        { name: "Village Road", progress: 35, status: "High Risk" },
+        { name: "School Building", progress: 60, status: "On Track" },
+        { name: "Community Hall", progress: 100, status: "Completed" },
+        { name: "Water Facility", progress: 25, status: "High Risk" }
+    ];
+
+    const table = document.getElementById("projectTable");
+
+    projects.forEach(project => {
+        const row = document.createElement("tr");
+        const statusClass = project.status === "High Risk"
+            ? "risk"
+            : "safe";
+
+        row.innerHTML = `
+            <td>${project.name}</td>
+            <td>${project.progress}%</td>
+            <td class="${statusClass}">${project.status}</td>
+        `;
+
+        table.appendChild(row);
+    });
+
+    function checkRisks() {
+        const riskyProjects = projects.filter(
+            project => project.status === "High Risk"
+        );
+
+        document.getElementById("alertMessage").innerHTML =
+            riskyProjects.map(project =>
+                "⚠️ " + project.name +
+                " needs review. Progress: " + project.progress + "%"
+            ).join("<br>");
+
+    }
+</script>
+</body>
+</html>
